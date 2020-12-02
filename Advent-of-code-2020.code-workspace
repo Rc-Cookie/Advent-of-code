@@ -1,11 +1,4 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "..\\Packages\\rccookie\\rccookie"
-		}
-	],
+	"folders": [],
 	"settings": {}
 }
