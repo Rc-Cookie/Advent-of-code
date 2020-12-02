@@ -1,20 +1,27 @@
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.Calendar;
 import java.util.Scanner;
 
 import rccookie.util.Console;
 
 public class Main {
-    public static void main(String[] args) {
-        try {
-            day2_2(args);
-        } catch (Exception e) { e.printStackTrace(); }
-    }
+
+    /**
+     * Overrides the current day. If null the actual day will be used.
+     */
+    public static final Integer DAY_OVERRIDE = null;
+
+
+    // ----------------------------------------------------------------
 
 
 
 
 
 
+
+    // ----------------------------------------------------------------
 
 
     public static void day2_1(String[] args) throws Exception {
@@ -69,8 +76,7 @@ public class Main {
     }
 
 
-
-
+    // ------------------------------------------------------------------------------------------------
 
 
     public static void day1_1(String[] args) {
@@ -99,5 +105,28 @@ public class Main {
                 }
             }
         }
+    }
+
+
+
+
+
+
+
+    public static void main(String[] args) {
+        try {
+            
+            int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+            Method method;
+            try {
+                method = Main.class.getDeclaredMethod("day" + day + "_2", String[].class);
+            } catch(NoSuchMethodException e) {
+                method = Main.class.getDeclaredMethod("day" + day + "_1", String[].class);
+            }
+
+            method.setAccessible(true);
+            method.invoke(null, (Object)args); // As element of array because it is the first (and only) argument of the method
+        
+        } catch (Exception e) { e.printStackTrace(); }
     }
 }
