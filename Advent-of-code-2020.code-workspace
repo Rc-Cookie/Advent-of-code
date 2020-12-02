@@ -1,4 +1,18 @@
 {
-	"folders": [],
-	"settings": {}
+    "folders": [
+        {
+            "name": "Advent-of-code-2020",
+            "path": "."
+        },
+        {
+            "path": "..\\Packages\\rccookie"
+        }
+    ],
+    "settings": {
+        "java.project.referencedLibraries": [
+            "F:\\Programme\\libraries\\greenfoot.jar",
+            "rccookie.jar",
+            "d:\\Dateien\\Git\\Packages\\rccookie\\rccookie.jar"
+        ]
+    },
 }
