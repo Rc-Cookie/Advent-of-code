@@ -27,6 +27,7 @@ public class Day extends util.Day {
     }
 
     private int numberOfTreeHits(String[] args, int vx, int vy) {
+        if(args == null || args.length == 0) return 0;
         final int width = args[0].length();
         int count = 0;
         for(int i=0; i<args.length/vy; i++) {
