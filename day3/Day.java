@@ -8,17 +8,30 @@ public class Day extends util.Day {
 
     @Override
     public void run1(String[] args) throws Exception {
-
-        final int width = args[0].length();
-        Console.log("Width: " + width);
-        int count = 0;
-
-        for(int i=0; i<args.length; i++) {
-            Console.log(i % width);
-            if(args[i].charAt((i * 3) % width) == TREE) count++;
-        }
-
-        Console.log("Count: " + count);
+        Console.log("Count: " + numberOfTreeHits(args, 3, 1));
     }
-    
+
+    @Override
+    public void run2(String[] args) throws Exception {
+        int[] hits = {
+            numberOfTreeHits(args, 1, 1),
+            numberOfTreeHits(args, 3, 1),
+            numberOfTreeHits(args, 5, 1),
+            numberOfTreeHits(args, 7, 1),
+            numberOfTreeHits(args, 1, 2),
+        };
+        long result = 1;
+        for(int i=0; i<hits.length; i++) result *= hits[i];
+
+        Console.log(hits, "Result: " + result);
+    }
+
+    private int numberOfTreeHits(String[] args, int vx, int vy) {
+        final int width = args[0].length();
+        int count = 0;
+        for(int i=0; i<args.length/vy; i++) {
+            if(args[i * vy].charAt((i * vx) % width) == TREE) count++;
+        }
+        return count;
+    }
 }
