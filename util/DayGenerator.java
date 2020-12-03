@@ -7,13 +7,13 @@ import java.util.Formatter;
 
 public class DayGenerator {
 
-    public static final void createDay(int day) {
+    public static final boolean createDay(int day) {
         try {
             File dir = new File("day" + day + "");
             if(!dir.exists()) dir.mkdir();
 
             File file = new File("day" + day + "/Day.java");
-            if(file.exists()) return;
+            if(file.exists()) return false;
             file.createNewFile();
 
             String fileText = Files.readString(Path.of("data/Day.template"));
@@ -23,6 +23,7 @@ public class DayGenerator {
             f.format(fileText, day);
 
             f.close();
+            return true;
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
