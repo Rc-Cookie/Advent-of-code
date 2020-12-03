@@ -2,6 +2,7 @@ import java.lang.reflect.Constructor;
 import java.util.Calendar;
 
 import util.Day;
+import util.DayGenerator;
 import util.Day.NotImplementedException;
 
 public class Main {
@@ -21,6 +22,8 @@ public class Main {
         try {
             
             int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+
+            if(DayGenerator.createDay(day)) return;
 
             @SuppressWarnings("unchecked")
             Class<Day> cls = (Class<Day>)Class.forName("day" + day + ".Day");
