@@ -7,7 +7,7 @@ import rccookie.util.Console;
 public class Day extends util.Day {
 
     @Override
-    public void run1(String[] args) throws Exception {
+    public void run1() throws Exception {
         Scanner sc = inputScanner();
         
         int valid = 0;
@@ -34,7 +34,7 @@ public class Day extends util.Day {
     }
 
     @Override
-    public void run2(String[] args) throws Exception {
+    public void run2() throws Exception {
         Scanner sc = inputScanner();
 
         int valid = 0;

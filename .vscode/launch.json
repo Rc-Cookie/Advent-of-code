@@ -6,20 +6,13 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch) with Arguments Prompt",
-            "request": "launch",
-            "mainClass": "Main",
-            "args": "${command:SpecifyProgramArgs}"
-        },
-        {
-            "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
         },
         {
             "type": "java",
-            "name": "Debug (Launch)-Main<Advent-of-code-2020_f8ac485a>",
+            "name": "Run Main",
             "request": "launch",
             "mainClass": "Main",
             "projectName": "Advent-of-code-2020_f8ac485a"

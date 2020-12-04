@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public abstract class Day {
 
-    public abstract void run1(String[] args) throws Exception;
+    public abstract void run1() throws Exception;
 
-    public void run2(String[] args) throws Exception {
+    public void run2() throws Exception {
         throw new NotImplementedException();
     };
 

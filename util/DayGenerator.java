@@ -20,10 +20,8 @@ public class DayGenerator {
             File dir = new File("day" + day + "");
             if(!dir.exists()) dir.mkdir();
 
-            boolean createdInput;
-
             File inputFile = new File("input/day" + day + ".input");
-            if((createdInput = !inputFile.exists())) {
+            if(!inputFile.exists()) {
                 inputFile.createNewFile();
                 Formatter f = new Formatter(inputFile);
                 f.format(getInput(day));
@@ -31,7 +29,7 @@ public class DayGenerator {
             }
 
             File file = new File("day" + day + "/Day.java");
-            if(file.exists()) return createdInput;
+            if(file.exists()) return false;
             file.createNewFile();
 
             String fileText = Files.readString(Path.of("data/Day.template"));
@@ -70,10 +68,11 @@ public class DayGenerator {
             Console.log("Logged in");
 
             // Go to input page
-            driver.get("https://adventofcode.com/2020/day/4/input");
+            driver.get("https://adventofcode.com/2020/day/" + day + "/input");
             String out = driver.getPageSource(); // Page source is for this page identical with the displayed text
 
             Console.log("Successfully downloaded input for day " + day);
+            System.out.println(); // To seperate from other logging
             return out;
         } catch(Exception e) {
             e.printStackTrace();

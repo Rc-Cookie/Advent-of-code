@@ -9,7 +9,7 @@ import rccookie.util.Console;
 public class Day extends util.Day {
 
     @Override
-    public void run1(String[] args) throws Exception {
+    public void run1() throws Exception {
         int valid = 0;
         for(Passport p : parsePassports()) {
             if(p.validKeys()) valid++;
@@ -18,8 +18,8 @@ public class Day extends util.Day {
     }
 
     @Override
-    public void run2(String[] args) throws Exception {
-        super.run2(args);
+    public void run2() throws Exception {
+        super.run2();
         int valid = 0;
         for(Passport p : parsePassports()) {
             if(p.valid()) valid++;
