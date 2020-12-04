@@ -1,8 +1,8 @@
 package day4;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 import rccookie.util.Console;
 
@@ -10,43 +10,41 @@ public class Day extends util.Day {
 
     @Override
     public void run1(String[] args) throws Exception {
-        ArrayList<String> currentPassport = new ArrayList<>();
-        Scanner sc = inputScanner();
-
-
         int valid = 0;
-
-        while(sc.hasNextLine()) {
-            String line = sc.nextLine();
-            if(line.replaceAll(" ", "").length() > 0) {
-                currentPassport.add(line);
-                continue;
-            }
-
-            int count = 0;
-            mappingLoop:
-            for(String mapping : currentPassport.stream().collect(Collectors.joining(" ")).split(" ")) {
-                if(mapping.startsWith("cid")) continue mappingLoop;
-                count++;
-            }
-            currentPassport.clear();
-            if(count >= 7) valid++;
+        for(Passport p : parsePassports()) {
+            if(p.validKeys()) valid++;
         }
-
-        int count = 0;
-            mappingLoop:
-            for(String mapping : currentPassport.stream().collect(Collectors.joining(" ")).split(" ")) {
-                if(mapping.startsWith("cid")) continue mappingLoop;
-                count++;
-            }
-            currentPassport.clear();
-            if(count >= 7) valid++;
-
         Console.log("Valid: " + valid);
     }
 
     @Override
     public void run2(String[] args) throws Exception {
         super.run2(args);
+        int valid = 0;
+        for(Passport p : parsePassports()) {
+            if(p.valid()) valid++;
+        }
+        Console.log("Valid: " + valid);
+    }
+
+    private List<Passport> parsePassports() throws Exception {
+        List<Passport> passports = new ArrayList<>();
+        passports.add(new Passport());
+
+        Scanner sc = inputScanner();
+
+        while(sc. hasNextLine()) {
+            String line = sc.nextLine();
+            if(line.replaceAll(" ", "").length() == 0) {
+                passports.add(new Passport());
+                continue;
+            }
+            for(String pair : line.split(" ")) {
+                int colonIndex = pair.indexOf(':');
+                passports.get(passports.size() - 1).put(pair.substring(0, colonIndex), pair.substring(colonIndex + 1));
+            }
+        }
+
+        return passports;
     }
 }
