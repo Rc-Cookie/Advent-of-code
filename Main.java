@@ -11,7 +11,7 @@ public class Main {
     /**
      * Overrides the current day. If null the actual day will be used.
      */
-    public static final Integer DAY_OVERRIDE = null;
+    public static final Integer DAY_OVERRIDE = 1;
 
 
 
@@ -24,8 +24,8 @@ public class Main {
             
             int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-            if(DayGenerator.createDay(day)) {
-                Console.log("Generated day " + day);
+            if(DayGenerator.generateFilesForDay(day)) {
+                Console.log("Generated files for day " + day);
                 return;
             }
 
