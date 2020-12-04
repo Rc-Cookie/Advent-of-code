@@ -21,8 +21,7 @@ public class DayGenerator {
             if(!dir.exists()) dir.mkdir();
 
             File inputFile = new File("input/day" + day + ".input");
-            if(!inputFile.exists()) {
-                inputFile.createNewFile();
+            if(!inputFile.exists() || Files.readString(Path.of("input/day" + day + ".input")).startsWith("Please don't")) {
                 Formatter f = new Formatter(inputFile);
                 f.format(getInput(day));
                 f.close();
@@ -30,7 +29,6 @@ public class DayGenerator {
 
             File file = new File("day" + day + "/Day.java");
             if(file.exists()) return false;
-            file.createNewFile();
 
             String fileText = Files.readString(Path.of("data/Day.template"));
 
@@ -52,7 +50,7 @@ public class DayGenerator {
         java.util.logging.Logger.getLogger("com.gargoylesoftware.htmlunit").setLevel(java.util.logging.Level.OFF);
 
         WebDriver driver = new HtmlUnitDriver();
-        try{
+        try {
             // Advent of code login page
             driver.get("https://adventofcode.com/auth/login");
             driver.findElements(By.tagName("a")).get(13).click(); // Github login link
