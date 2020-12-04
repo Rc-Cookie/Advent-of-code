@@ -1,5 +1,7 @@
 package day%d;
 
+import rccookie.util.Console;
+
 public class Day extends util.Day {
 
     @Override
