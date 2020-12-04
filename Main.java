@@ -1,6 +1,7 @@
 import java.lang.reflect.Constructor;
 import java.util.Calendar;
 
+import rccookie.util.Console;
 import util.Day;
 import util.DayGenerator;
 import util.Day.NotImplementedException;
@@ -23,7 +24,10 @@ public class Main {
             
             int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
-            if(DayGenerator.createDay(day)) return;
+            if(DayGenerator.createDay(day)) {
+                Console.log("Generated day " + day);
+                return;
+            }
 
             @SuppressWarnings("unchecked")
             Class<Day> cls = (Class<Day>)Class.forName("day" + day + ".Day");
