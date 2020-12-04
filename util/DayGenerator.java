@@ -12,6 +12,9 @@ public class DayGenerator {
             File dir = new File("day" + day + "");
             if(!dir.exists()) dir.mkdir();
 
+            File inputFile = new File("input/day" + day + ".input");
+            if(!inputFile.exists()) inputFile.createNewFile();
+
             File file = new File("day" + day + "/Day.java");
             if(file.exists()) return false;
             file.createNewFile();
