@@ -5,6 +5,7 @@ import static java.nio.file.Files.readString;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Day {
@@ -17,7 +18,18 @@ public abstract class Day {
 
     protected String input() {
         try {
-            return readString(Path.of("data/day" + getDay() + ".input"), US_ASCII);
+            return readString(Path.of("input/day" + getDay() + ".input"), US_ASCII);
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected String[] inputInLines() {
+        try {
+            ArrayList<String> input = new ArrayList<>();
+            Scanner sc = inputScanner();
+            while(sc.hasNextLine()) input.add(sc.nextLine());
+            return input.toArray(new String[] { });
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
@@ -25,7 +37,7 @@ public abstract class Day {
 
     protected Scanner inputScanner() {
         try {
-            return new Scanner(new File("data/day" + getDay() + ".input"));
+            return new Scanner(new File("input/day" + getDay() + ".input"));
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
