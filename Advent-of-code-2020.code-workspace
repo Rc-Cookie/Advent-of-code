@@ -10,7 +10,6 @@
     ],
     "settings": {
         "java.project.referencedLibraries": [
-            "F:\\Programme\\libraries\\greenfoot.jar",
             "rccookie.jar",
             "d:\\Dateien\\Git\\Packages\\rccookie\\rccookie.jar",
             "d:\\Utilities\\selenium-java-3.141.59\\client-combined-3.141.59.jar",
