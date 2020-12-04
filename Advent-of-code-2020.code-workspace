@@ -12,7 +12,10 @@
         "java.project.referencedLibraries": [
             "F:\\Programme\\libraries\\greenfoot.jar",
             "rccookie.jar",
-            "d:\\Dateien\\Git\\Packages\\rccookie\\rccookie.jar"
+            "d:\\Dateien\\Git\\Packages\\rccookie\\rccookie.jar",
+            "d:\\Utilities\\selenium-java-3.141.59\\client-combined-3.141.59.jar",
+            "d:\\Utilities\\selenium-java-3.141.59\\libs\\htmlunit-driver-2.45.0.jar",
+            "d:\\Utilities\\selenium-java-3.141.59\\libs\\htmlunit-driver-2.45.0-jar-with-dependencies.jar"
         ]
     },
 }
