@@ -12,6 +12,6 @@ public class Day extends util.Day {
 
     @Override
     public void run2() throws Exception {
-        super.run2(args);
+        super.run2();
     }
 }
