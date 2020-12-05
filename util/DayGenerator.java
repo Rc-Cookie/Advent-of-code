@@ -38,14 +38,19 @@ public class DayGenerator {
                 String currentCode = Files.readString(Path.of("day" + day + "/Day.java"));
                 if(currentCode.contains(DESC_REPLACEMENT_1) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
                     String desc = getFirstDescription(day);
+                    String[] args = occurrences(currentCode, "%");
+                    currentCode = currentCode.replaceAll("%", "%s");
                     Formatter f = new Formatter(file);
-                    f.format(currentCode.replace(DESC_REPLACEMENT_1, desc));
+                    f.format(currentCode.replace(DESC_REPLACEMENT_1, desc), (Object[])args);
                     f.close();
+                    currentCode = Files.readString(Path.of("day" + day + "/Day.java")); // Ensures that the next replacement will not start with the initial version again
                 }
                 if(currentCode.contains(DESC_REPLACEMENT_2) &&! currentCode.replaceAll(" ", "").contains(PREFAB_CODE) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
                     String desc = getSecondDescription(day);
+                    String[] args = occurrences(currentCode, "%");
+                    currentCode = currentCode.replaceAll("%", "%s");
                     Formatter f = new Formatter(file);
-                    f.format(currentCode.replace(DESC_REPLACEMENT_2, desc));
+                    f.format(currentCode.replace(DESC_REPLACEMENT_2, desc), (Object[])args);
                     f.close();
                 }
                 return false;
@@ -62,6 +67,14 @@ public class DayGenerator {
         }
     }
 
+
+    private static final String[] occurrences(String s, String sub) {
+        int count = 0, i = 0;
+        while((i = s.indexOf(sub, i) + 1) > 0)count++;
+        String[] o = new String[count];
+        for(int j=0; j<count; j++) o[i] = sub;
+        return o;
+    }
 
 
 
