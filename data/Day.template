@@ -4,15 +4,23 @@ import rccookie.util.Console;
 
 public class Day extends util.Day {
 
+    /**
+     * %s
+     * <p><b>This method will print the result for the personal input in the console.</b>
+     */
     @Override
     public void run1() throws Exception {
         String[] input = inputInLines();
-        Console.log((Object[])input);
+        Console.log("Input: " + input);
         
     }
 
+    /**
+     * %s
+     * <p><b>This method will print the result for the personal input in the console.</b>
+     */
     @Override
     public void run2() throws Exception {
-        super.run2();
+        %s
     }
 }
