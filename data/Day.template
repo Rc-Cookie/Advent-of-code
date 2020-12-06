@@ -11,7 +11,7 @@ public class Day extends util.Day {
     @Override
     public void run1() throws Exception {
         String[] input = inputInLines();
-        Console.log("Input: " + input);
+        Console.map("Input", input);
         
     }
 
