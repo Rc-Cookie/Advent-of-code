@@ -192,7 +192,7 @@ public class DayGenerator {
 
             // Go to day page
             driver.get("https://adventofcode.com/2020/day/" + day);
-            String out = driver.findElements(By.className("day-desc")).get(1).getAttribute("innerHtml");
+            String out = driver.findElements(By.className("day-desc")).get(1).getAttribute("innerHTML");
 
             Console.log("Successfully downloaded description part 2 for day " + day);
             System.out.println(); // To seperate from other logging
