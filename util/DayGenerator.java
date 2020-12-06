@@ -45,7 +45,7 @@ public class DayGenerator {
                     f.close();
                     currentCode = Files.readString(Path.of("day" + day + "/Day.java")); // Ensures that the next replacement will not start with the initial version again
                 }
-                if(currentCode.contains(DESC_REPLACEMENT_2) &&! currentCode.replaceAll(" ", "").contains(PREFAB_CODE) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
+                if(currentCode.contains(DESC_REPLACEMENT_2) &&! currentCode.contains(PREFAB_CODE) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
                     String desc = getSecondDescription(day);
                     String[] args = occurrences(currentCode, "%");
                     currentCode = currentCode.replaceAll("%", "%s");
@@ -142,12 +142,12 @@ public class DayGenerator {
         try {
             // Go to day page
             driver.get("https://adventofcode.com/2020/day/" + day);
-            String out = driver.findElements(By.className("day-desc")).get(0).getText();
+            String out = driver.findElements(By.className("day-desc")).get(0).getAttribute("innerHTML");
 
             Console.log("Successfully downloaded description part 1 for day " + day);
             System.out.println(); // To seperate from other logging
 
-            out = out.replaceAll("\n", "\n     * <p>");
+            out = out.replaceAll("\n", "\n     * ");
             return out;
         } catch(NoSuchElementException e) {
             Console.log("Description part 1 is not avalialble yet");
@@ -192,15 +192,19 @@ public class DayGenerator {
 
             // Go to day page
             driver.get("https://adventofcode.com/2020/day/" + day);
-            String out = driver.findElements(By.className("day-desc")).get(1).getText();
+            String out = driver.findElements(By.className("day-desc")).get(1).getAttribute("innerHtml");
 
             Console.log("Successfully downloaded description part 2 for day " + day);
             System.out.println(); // To seperate from other logging
 
-            out = out.replaceAll("\n", "\n     * <p>");
+            out = out.replaceAll("\n", "\n     * ");
             return out;
         } catch(NoSuchElementException e) {
             Console.log("Description part 2 is not avalialble yet (you propably haven't completed part 1)");
+            System.out.println(); // To seperate from other logging
+            return DESC_REPLACEMENT_2;
+        } catch(IndexOutOfBoundsException e) {
+            Console.log("Description part 2 is not avalialble yet");
             System.out.println(); // To seperate from other logging
             return DESC_REPLACEMENT_2;
         } catch(Exception e) {
