@@ -42,15 +42,15 @@ public class Day extends util.Day {
      */
     @Override
     public void run1() throws Exception {
-        Map<String, Regulation> regulations = parseRegulations();
+        Map<String, BagRegulation> regulations = parseBagRegulations();
 
-        Set<String> superTypes = regulations.get("shiny gold").superTypes;
+        Set<String> superTypes = regulations.get("shiny gold").containedBy;
         Set<String> allSuperTypes = new HashSet<>(superTypes);
 
         while(!superTypes.isEmpty()) {
             Set<String> old = superTypes;
             superTypes = new HashSet<>();
-            for(String s : old) superTypes.addAll(regulations.get(s).superTypes);
+            for(String s : old) superTypes.addAll(regulations.get(s).containedBy);
             allSuperTypes.addAll(superTypes);
         }
         Console.map("Number of bag types that contain at least one shiny gold bag", allSuperTypes.size());
@@ -83,10 +83,10 @@ public class Day extends util.Day {
      */
     @Override
     public void run2() throws Exception {
-        Map<String, Regulation> regulations = parseRegulations();
+        Map<String, BagRegulation> regulations = parseBagRegulations();
 
         List<String> subTypes = new ArrayList<>();
-        for(Regulation.SubBagType subType : regulations.get("shiny gold").subTypes) {
+        for(BagRegulation.ContainedBagRegulation subType : regulations.get("shiny gold").containedBagRegulations) {
             for(int i=0; i<subType.count; i++)
                 subTypes.add(subType.name);
         }
@@ -96,7 +96,7 @@ public class Day extends util.Day {
             List<String> old = subTypes;
             subTypes = new ArrayList<>();
             for(String currentSubBag : old) {
-                for(Regulation.SubBagType subType : regulations.get(currentSubBag).subTypes) {
+                for(BagRegulation.ContainedBagRegulation subType : regulations.get(currentSubBag).containedBagRegulations) {
                     for(int i=0; i<subType.count; i++)
                         subTypes.add(subType.name);
                 }
@@ -109,38 +109,38 @@ public class Day extends util.Day {
 
 
 
-    private Map<String, Regulation> parseRegulations() {
-        Map<String, Regulation> regulations = new HashMap<>();
+    private Map<String, BagRegulation> parseBagRegulations() {
+        Map<String, BagRegulation> bagRegulations = new HashMap<>();
 
         // Add sub regulations
         for(String line : inputInLines()) {
             StringBuilder remaining = new StringBuilder(line);
-            String type = remaining.substring(0, remaining.indexOf("bag") - 1);
+            String currentBagName = remaining.substring(0, remaining.indexOf("bag") - 1);
             remaining.delete(0, line.indexOf("contain") + 8);
             if(remaining.toString().startsWith("no other bags.")) {
-                regulations.put(type, new Regulation(new HashSet<>()));
+                bagRegulations.put(currentBagName, new BagRegulation(new HashSet<>()));
                 continue;
             }
-            Set<Regulation.SubBagType> r = new HashSet<>();
-            inlineLoop:
+            Set<BagRegulation.ContainedBagRegulation> containedBagRegulations = new HashSet<>();
+            containedBagLoop:
             while(true) {
                 int count = Integer.parseInt(remaining.substring(0, remaining.indexOf(" ")));
                 remaining.delete(0, remaining.indexOf(" ") + 1);
-                r.add(new Regulation.SubBagType(remaining.substring(0, remaining.indexOf(" bag")), count));
+                containedBagRegulations.add(new BagRegulation.ContainedBagRegulation(remaining.substring(0, remaining.indexOf(" bag")), count));
                 remaining.delete(0, remaining.indexOf(" bag") + 4);
-                if(remaining.indexOf(",") == -1) break inlineLoop;
+                if(remaining.indexOf(",") == -1) break containedBagLoop;
                 remaining.delete(0, remaining.indexOf(" ") + 1);
             }
-            regulations.put(type, new Regulation(r));
+            bagRegulations.put(currentBagName, new BagRegulation(containedBagRegulations));
         }
 
         // Add super connections
-        for(Entry<String, Regulation> bagRegulation : regulations.entrySet()) {
-            for(Regulation.SubBagType subType : bagRegulation.getValue().subTypes) {
-                regulations.get(subType.name).superTypes.add(bagRegulation.getKey());
+        for(Entry<String, BagRegulation> bagRegulation : bagRegulations.entrySet()) {
+            for(BagRegulation.ContainedBagRegulation subType : bagRegulation.getValue().containedBagRegulations) {
+                bagRegulations.get(subType.name).containedBy.add(bagRegulation.getKey());
             }
         }
 
-        return regulations;
+        return bagRegulations;
     }
 }
