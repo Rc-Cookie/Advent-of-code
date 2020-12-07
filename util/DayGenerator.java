@@ -1,6 +1,7 @@
 package util;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -38,20 +39,11 @@ public class DayGenerator {
                 String currentCode = Files.readString(Path.of("day" + day + "/Day.java"));
                 if(currentCode.contains(DESC_REPLACEMENT_1) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
                     String desc = getFirstDescription(day);
-                    String[] args = occurrences(currentCode, "%");
-                    currentCode = currentCode.replaceAll("%", "%s");
-                    Formatter f = new Formatter(file);
-                    f.format(currentCode.replace(DESC_REPLACEMENT_1, desc), (Object[])args);
-                    f.close();
-                    currentCode = Files.readString(Path.of("day" + day + "/Day.java")); // Ensures that the next replacement will not start with the initial version again
+                    new PrintWriter(file).append(currentCode = currentCode.replace(DESC_REPLACEMENT_1, desc)).close();
                 }
                 if(currentCode.contains(DESC_REPLACEMENT_2) &&! currentCode.contains(PREFAB_CODE) && Calendar.getInstance().get(Calendar.DAY_OF_MONTH) >= day) {
                     String desc = getSecondDescription(day);
-                    String[] args = occurrences(currentCode, "%");
-                    currentCode = currentCode.replaceAll("%", "%s");
-                    Formatter f = new Formatter(file);
-                    f.format(currentCode.replace(DESC_REPLACEMENT_2, desc), (Object[])args);
-                    f.close();
+                    new PrintWriter(file).append(currentCode.replace(DESC_REPLACEMENT_2, desc)).close();
                 }
                 return false;
             }
@@ -65,15 +57,6 @@ public class DayGenerator {
         } catch(Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-
-    private static final String[] occurrences(String s, String sub) {
-        int count = 0, i = 0;
-        while((i = s.indexOf(sub, i) + 1) > 0)count++;
-        String[] o = new String[count];
-        for(int j=0; j<count; j++) o[i] = sub;
-        return o;
     }
 
 
