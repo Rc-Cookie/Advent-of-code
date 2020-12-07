@@ -53,10 +53,32 @@ public class Day extends util.Day {
             for(String s : old) superTypes.addAll(regulations.get(s).superTypes);
             allSuperTypes.addAll(superTypes);
         }
-        Console.log(allSuperTypes, allSuperTypes.size());
+        Console.map("Number of bag types that contain at least one shiny gold bag", allSuperTypes.size());
     }
 
     /**
+     * <h2 id="part2">--- Part Two ---</h2><p>It's getting pretty expensive to fly these days - not because of ticket prices, but because of the ridiculous number of bags you need to buy!</p>
+     * <p>Consider again your <code>shiny gold</code> bag and the rules from the above example:</p>
+     * <ul>
+     * <li><code>faded blue</code> bags contain <code>0</code> other bags.</li>
+     * <li><code>dotted black</code> bags contain <code>0</code> other bags.</li>
+     * <li><code>vibrant plum</code> bags contain <code>11</code> other bags: 5 <code>faded blue</code> bags and 6 <code>dotted black</code> bags.</li>
+     * <li><code>dark olive</code> bags contain <code>7</code> other bags: 3 <code>faded blue</code> bags and 4 <code>dotted black</code> bags.</li>
+     * </ul>
+     * <p>So, a single <code>shiny gold</code> bag must contain 1 <code>dark olive</code> bag (and the 7 bags within it) plus 2 <code>vibrant plum</code> bags (and the 11 bags within <em>each</em> of those): <code>1 + 1*7 + 2 + 2*11</code> = <code><em>32</em></code> bags!</p>
+     * <p>Of course, the actual rules have a <span title="100%">small</span> chance of going several levels deeper than this example; be sure to count all of the bags, even if the nesting becomes topologically impractical!</p>
+     * <p>Here's another example:</p>
+     * <pre><code>shiny gold bags contain 2 dark red bags.
+     * dark red bags contain 2 dark orange bags.
+     * dark orange bags contain 2 dark yellow bags.
+     * dark yellow bags contain 2 dark green bags.
+     * dark green bags contain 2 dark blue bags.
+     * dark blue bags contain 2 dark violet bags.
+     * dark violet bags contain no other bags.
+     * </code></pre>
+     * <p>In this example, a single <code>shiny gold</code> bag must contain <code><em>126</em></code> other bags.</p>
+     * <p><em>How many individual bags are required inside your single <code>shiny gold</code> bag?</em></p>
+     * 
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
@@ -71,7 +93,6 @@ public class Day extends util.Day {
         List<String> allSubTypes = new ArrayList<>(subTypes);
 
         while(!subTypes.isEmpty()) {
-            Console.map("SubTypes", subTypes);
             List<String> old = subTypes;
             subTypes = new ArrayList<>();
             for(String currentSubBag : old) {
@@ -83,7 +104,7 @@ public class Day extends util.Day {
             allSubTypes.addAll(subTypes);
         }
 
-        Console.log(allSubTypes, allSubTypes.size());
+        Console.map("Number of bag types that have to be contained in a shiny gold bag", allSubTypes.size());
     }
 
 
