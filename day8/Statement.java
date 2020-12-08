@@ -21,7 +21,8 @@ public class Statement {
     public Statement process(Statement[] statements) {
         callCount++;
         ACCUMULATION += accumulation;
-        return statements[nextIndex/* % statements.length*/];
+        if(nextIndex == statements.length) return null;
+        return statements[nextIndex];
     }
 
     @Override

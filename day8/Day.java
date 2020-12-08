@@ -1,7 +1,7 @@
 package day8;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
 
 import rccookie.util.Console;
 
@@ -94,7 +94,18 @@ public class Day extends util.Day {
      */
     @Override
     public void run2() throws Exception {
-        
+        for(Statement[] modifiedStatements : parseAllModfiedStatements()) {
+            try{
+                Statement.ACCUMULATION = 0;
+                Statement currentStatement = modifiedStatements[0];
+                do {
+                    currentStatement = currentStatement.process(modifiedStatements);
+                } while (currentStatement != null && currentStatement.getCallCount() == 0);
+                if(currentStatement != null) continue;
+                Console.map("Accumulation after execution", Statement.ACCUMULATION);
+                return;
+            } catch(IndexOutOfBoundsException e) { }
+        }
     }
 
     private Statement[] parseStatements() {
@@ -108,5 +119,43 @@ public class Day extends util.Day {
             );
         }
         return statements;
+    }
+
+    private Statement[][] parseAllModfiedStatements() {
+        String[] input = inputInLines();
+        List<Statement[]> allStatements = new ArrayList<>();
+        for(int j=0; j<input.length; j++) {
+            if(input[j].startsWith("acc")) continue;
+            Statement[] statements = new Statement[input.length];
+            for(int i=0; i<statements.length; i++) {
+                if(i == j) {
+                    if(input[i].startsWith("jmp")) {
+                        statements[i] = new Statement(
+                            "nop",
+                            Integer.parseInt(input[i].substring(4)),
+                            i
+                        );
+                    }
+                    else {
+                        statements[i] = new Statement(
+                            "jmp",
+                            Integer.parseInt(input[i].substring(4)),
+                            i
+                        );
+                    }
+                }
+                else {
+                    statements[i] = new Statement(
+                        input[i].substring(0, 3),
+                        Integer.parseInt(input[i].substring(4)),
+                        i
+                    );
+                }
+                
+            }
+            allStatements.add(statements);
+        }
+        
+        return allStatements.toArray(new Statement[0][]);
     }
 }
