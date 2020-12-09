@@ -115,7 +115,6 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart2() throws Exception {
-        super.resultPart2();
         int valid = 0;
         for(Passport p : parsePassports()) {
             if(p.valid()) valid++;
