@@ -47,7 +47,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         Statement[] statements = parseStatements();
         Statement.ACCUMULATION = 0;
         Statement currentStatement = statements[0];
@@ -57,7 +57,7 @@ public class Day extends util.Day {
             currentStatement = currentStatement.process(statements);
         } while (currentStatement.getCallCount() == 0);
 
-        Console.map("Accumulation before loop entering", Statement.ACCUMULATION);
+        return Statement.ACCUMULATION;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         for(Statement[] modifiedStatements : parseAllModfiedStatements()) {
             try{
                 Statement.ACCUMULATION = 0;
@@ -102,10 +102,10 @@ public class Day extends util.Day {
                     currentStatement = currentStatement.process(modifiedStatements);
                 } while (currentStatement != null && currentStatement.getCallCount() == 0);
                 if(currentStatement != null) continue;
-                Console.map("Accumulation after execution", Statement.ACCUMULATION);
-                return;
+                return Statement.ACCUMULATION;
             } catch(IndexOutOfBoundsException e) { }
         }
+        return -1;
     }
 
     private Statement[] parseStatements() {

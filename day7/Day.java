@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -41,7 +39,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         Map<String, BagRegulation> regulations = parseBagRegulations();
 
         Set<String> superTypes = regulations.get("shiny gold").containedBy;
@@ -53,7 +51,7 @@ public class Day extends util.Day {
             for(String s : old) superTypes.addAll(regulations.get(s).containedBy);
             allSuperTypes.addAll(superTypes);
         }
-        Console.map("Number of bag types that contain at least one shiny gold bag", allSuperTypes.size());
+        return allSuperTypes.size();
     }
 
     /**
@@ -82,7 +80,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         Map<String, BagRegulation> regulations = parseBagRegulations();
 
         List<String> subTypes = new ArrayList<>();
@@ -104,7 +102,7 @@ public class Day extends util.Day {
             allSubTypes.addAll(subTypes);
         }
 
-        Console.map("Number of bag types that have to be contained in a shiny gold bag", allSubTypes.size());
+        return allSubTypes.size();
     }
 
 

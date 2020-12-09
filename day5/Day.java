@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -39,11 +37,11 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         final List<Seat> seats = getSeats();
         int maxId = -1;
         for(Seat seat : seats) if(seat.id > maxId) maxId = seat.id;
-        Console.log("Highest seat id: " + maxId);
+        return maxId;
     }
 
     /**
@@ -55,14 +53,14 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         final List<Integer> ids = getSeats().stream().map(seat -> seat.id).collect(Collectors.toList());
         ids.sort(null);
         for(int i=ids.get(0); i<ids.get(ids.size() - 1); i++) {
             if(ids.contains(i)) continue;
-            Console.log("Personal seat's id: " + i);
-            return;
+            return i;
         }
+        return -1;
     }
 
 

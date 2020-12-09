@@ -6,21 +6,22 @@ public class Day extends util.Day {
 
     /**
      * %s
-     * <p><b>This method will print the result for the personal input in the console.</b>
+     * <p><b>This method will return the result for the personal input.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         String[] input = inputInLines();
         Console.map("Input", input);
-        
+        return -1;
     }
 
     /**
      * %s
-     * <p><b>This method will print the result for the personal input in the console.</b>
+     * <p><b>This method will return the result for the personal input.</b>
      */
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         %s
+        return -1;
     }
 }

@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public abstract class Day {
 
-    public abstract void run1() throws Exception;
+    public abstract long resultPart1() throws Exception;
 
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         throw new NotImplementedException();
     };
 
@@ -35,6 +35,13 @@ public abstract class Day {
         }
     }
 
+    protected long[] inputNumbers() {
+        String[] input = inputInLines();
+        long[] numbers = new long[input.length];
+        for(int i=0; i<input.length; i++) numbers[i] = Long.parseLong(input[i]);
+        return numbers;
+    }
+
     protected Scanner inputScanner() {
         try {
             return new Scanner(new File("input/day" + getDay() + ".input"));
@@ -43,7 +50,7 @@ public abstract class Day {
         }
     }
 
-    protected int getDay() {
+    public int getDay() {
         String name = getClass().getName();
         return Integer.parseInt(name.substring(3, name.indexOf(".")));
     }

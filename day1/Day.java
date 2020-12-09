@@ -24,7 +24,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() {
+    public long resultPart1() {
         final String[] input = inputInLines();
         int[] numbers = new int[input.length];
         for(int i=0; i<numbers.length; i++) numbers[i] = Integer.parseInt(input[i]);
@@ -32,10 +32,12 @@ public class Day extends util.Day {
         for(int i=0; i<numbers.length-1; i++) {
             for(int j=i+1; j<numbers.length; j++) {
                 if(numbers[i] + numbers[j] == 2020) {
-                    Console.log(numbers[i], numbers[j], numbers[i] * numbers[j]);
+                    Console.log(numbers[i], numbers[j]);
+                    return numbers[i] * numbers[j];
                 }
             }
         }
+        return -1;
     }
 
     /**
@@ -46,7 +48,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() {
+    public long resultPart2() {
         final String[] input = inputInLines();
         int[] numbers = new int[input.length];
         for(int i=0; i<numbers.length; i++) numbers[i] = Integer.parseInt(input[i]);
@@ -55,10 +57,12 @@ public class Day extends util.Day {
             for(int j=i+1; j<numbers.length-1; j++) {
                 for(int k=j+1; k<numbers.length; k++) {
                     if(numbers[i] + numbers[j] + numbers[k] == 2020) {
-                        Console.log(numbers[i], numbers[j], numbers[k], numbers[i] * numbers[j] * numbers[k]);
+                        Console.log(numbers[i], numbers[j], numbers[k]);
+                        return numbers[i] * numbers[j] * numbers[k];
                     }
                 }
             }
         }
+        return -1;
     }
 }

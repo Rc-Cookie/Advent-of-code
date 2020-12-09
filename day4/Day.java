@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -45,12 +43,12 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         int valid = 0;
         for(Passport p : parsePassports()) {
             if(p.validKeys()) valid++;
         }
-        Console.log("Valid: " + valid);
+        return valid;
     }
 
     /**
@@ -116,13 +114,13 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
-        super.run2();
+    public long resultPart2() throws Exception {
+        super.resultPart2();
         int valid = 0;
         for(Passport p : parsePassports()) {
             if(p.valid()) valid++;
         }
-        Console.log("Valid: " + valid);
+        return valid;
     }
 
     private List<Passport> parsePassports() throws Exception {

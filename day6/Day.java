@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -48,8 +46,8 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
-        Console.map("Sum of counts", parseGroups(members -> new Group1(members)).stream().mapToInt(g -> g.count).sum());
+    public long resultPart1() throws Exception {
+        return parseGroups(members -> new Group1(members)).stream().mapToInt(g -> g.count).sum();
     }
 
     /**
@@ -86,8 +84,8 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
-        Console.map("Sum of counts", parseGroups(members -> new Group2(members)).stream().mapToInt(g -> g.count).sum());
+    public long resultPart2() throws Exception {
+        return parseGroups(members -> new Group2(members)).stream().mapToInt(g -> g.count).sum();
     }
 
 

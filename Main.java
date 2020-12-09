@@ -24,23 +24,26 @@ public class Main {
             
             int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             if(args != null && args.length > 0) day = Integer.parseInt(args[0]);
-
-            if(DayGenerator.generateFilesForDay(day)) {
-                Console.log("Generated template for day " + day);
-                return;
-            }
-
-            @SuppressWarnings("unchecked")
-            Class<Day> cls = (Class<Day>)Class.forName("day" + day + ".Day");
-            Constructor<Day> ctor = cls.getDeclaredConstructor();
-            ctor.setAccessible(true);
-            Day dayInstance = ctor.newInstance();
-            try{
-                dayInstance.run2();
-            } catch(NotImplementedException e) {
-                dayInstance.run1();
-            }
-        
+            runDay(day);
         } catch (Exception e) { e.printStackTrace(); }
+    }
+
+    private static final void runDay(int day) throws Exception {
+        if(DayGenerator.generateFilesForDay(day)) {
+            Console.log("Generated template for day " + day);
+            return;
+        }
+
+        @SuppressWarnings("unchecked")
+        Class<Day> cls = (Class<Day>)Class.forName("day" + day + ".Day");
+        Constructor<Day> ctor = cls.getDeclaredConstructor();
+        ctor.setAccessible(true);
+        Day dayInstance = ctor.newInstance();
+
+        Console.map("Result of part 1 from day " + dayInstance.getDay(), dayInstance.resultPart1());
+        System.out.println("\n-------------------------------------------------\n");
+        try {
+            Console.map("Result of part 2 from day " + dayInstance.getDay(), dayInstance.resultPart2());
+        } catch(NotImplementedException e) { }
     }
 }

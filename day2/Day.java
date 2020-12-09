@@ -2,8 +2,6 @@ package day2;
 
 import java.util.Scanner;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -22,7 +20,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
+    public long resultPart1() throws Exception {
         Scanner sc = inputScanner();
         
         int valid = 0;
@@ -45,7 +43,7 @@ public class Day extends util.Day {
             if(count >= min && count <= max) valid++;
         }
 
-        Console.log("Valid: " + valid);
+        return valid;
     }
 
     /**
@@ -61,7 +59,7 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         Scanner sc = inputScanner();
 
         int valid = 0;
@@ -83,6 +81,6 @@ public class Day extends util.Day {
             else if(line.length() > b && line.charAt(b) == c) valid++;
         }
 
-        Console.log("Valid: " + valid);
+        return valid;
     }
 }

@@ -53,12 +53,12 @@ public class Day extends util.Day {
      * <p><b>This method will print the result for the personal input in the console.</b>
      */
     @Override
-    public void run1() throws Exception {
-        Console.log("Count: " + numberOfTreeHits(3, 1));
+    public long resultPart1() throws Exception {
+        return numberOfTreeHits(3, 1);
     }
 
     @Override
-    public void run2() throws Exception {
+    public long resultPart2() throws Exception {
         int[] hits = {
             numberOfTreeHits(1, 1),
             numberOfTreeHits(3, 1),
@@ -69,7 +69,8 @@ public class Day extends util.Day {
         long result = 1;
         for(int i=0; i<hits.length; i++) result *= hits[i];
 
-        Console.log(hits, "Result: " + result);
+        Console.map("Hits", hits);
+        return result;
     }
 
     /**
