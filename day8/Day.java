@@ -3,8 +3,6 @@ package day8;
 import java.util.ArrayList;
 import java.util.List;
 
-import rccookie.util.Console;
-
 public class Day extends util.Day {
 
     /**
@@ -53,7 +51,6 @@ public class Day extends util.Day {
         Statement currentStatement = statements[0];
 
         do {
-            Console.map("Current statement", currentStatement);
             currentStatement = currentStatement.process(statements);
         } while (currentStatement.getCallCount() == 0);
 
