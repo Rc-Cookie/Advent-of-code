@@ -20,7 +20,7 @@ public class DayGenerator {
 
     private static final String DESC_REPLACEMENT_1 = "This description will be generated once it is available. Please don't change anything!";
     private static final String DESC_REPLACEMENT_2 = "This description will be generated once the first task is completed. Please don't change anything!";
-    private static final String PREFAB_CODE = "super.run2(); //Don't edit this until task 1 is done or the code will try to download the second description every time";
+    private static final String PREFAB_CODE = "super.resultPart2(); //Don't edit this until task 1 is done or the code will try to download the second description every time";
 
     public static final boolean generateFilesForDay(int day) {
         try {
