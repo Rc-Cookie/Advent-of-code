@@ -82,12 +82,9 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart1() throws Exception {
-        List<Long> numbers = new ArrayList<Long>();
-        numbers.add(0l);
-        for(long n : inputNumbers()) numbers.add(n);
-        numbers.sort(null);
+        List<Long> numbers = parseNumbers();
 
-        int dif1 = 0, dif3 = 1; // Dif to final laptop adapter
+        int dif1 = 0, dif3 = 0;
         for(int i=1; i<numbers.size(); i++) {
             if(numbers.get(i) - numbers.get(i - 1) == 1) dif1++;
             else if(numbers.get(i) - numbers.get(i - 1) == 3) dif3++;
@@ -148,7 +145,35 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart2() throws Exception {
-        
-        return -1;
+        List<Long> numbers = parseNumbers();
+        List<Long> combinationsUpwards = new ArrayList<>(numbers.size());
+        for(int i=0; i<numbers.size(); i++) combinationsUpwards.add(0l);
+
+        combinationsUpwards.set(numbers.size() - 1, 1l);
+
+        for(int i=numbers.size()-2; i>=0; i--) {
+            long count = combinationsUpwards.get(i+1);
+            long number = numbers.get(i);
+            try {
+                if(numbers.get(i+2) - number <= 3) count += combinationsUpwards.get(i+2);
+                if(numbers.get(i+3) - number <= 3) count += combinationsUpwards.get(i+3);
+            } catch(IndexOutOfBoundsException e) { }
+
+            combinationsUpwards.set(i, count);
+        }
+
+        Console.map("Possible combinations upwards", combinationsUpwards);
+
+        return combinationsUpwards.get(0);
+    }
+
+
+    private List<Long> parseNumbers() {
+        List<Long> numbers = new ArrayList<Long>();
+        numbers.add(0l);
+        for(long n : inputNumbers()) numbers.add(n);
+        numbers.sort(null);
+        numbers.add(numbers.get(numbers.size() - 1) + 3);
+        return numbers;
     }
 }
