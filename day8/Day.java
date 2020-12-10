@@ -148,7 +148,6 @@ public class Day extends util.Day {
                         i
                     );
                 }
-                
             }
             allStatements.add(statements);
         }
