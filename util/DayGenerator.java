@@ -83,7 +83,7 @@ public class DayGenerator {
             Console.log("Logging in...");
 
             // Github login page
-            driver.findElement(By.id("login_field")).sendKeys("RcCookie0");
+            driver.findElement(By.id("login_field")).sendKeys("Rc-Cookie");
             WebElement e = driver.findElement(By.id("password"));
             e.sendKeys(getPassword());
             e.submit();
@@ -166,7 +166,7 @@ public class DayGenerator {
             Console.log("Logging in...");
 
             // Github login page
-            driver.findElement(By.id("login_field")).sendKeys("RcCookie0");
+            driver.findElement(By.id("login_field")).sendKeys("Rc-Cookie");
             WebElement e = driver.findElement(By.id("password"));
             e.sendKeys(getPassword());
             e.submit();
