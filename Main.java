@@ -24,7 +24,6 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            
             int day = DAY_OVERRIDE != null ? DAY_OVERRIDE : Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
             if(args != null && args.length > 0) day = Integer.parseInt(args[0]);
             if(RUN_ALL) {
