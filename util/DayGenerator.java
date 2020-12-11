@@ -14,7 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
-import rccookie.util.Console;
+import com.github.rccookie.common.util.Console;
 
 public class DayGenerator {
 

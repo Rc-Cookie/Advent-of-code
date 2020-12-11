@@ -1,6 +1,6 @@
 package day1;
 
-import rccookie.util.Console;
+import com.github.rccookie.common.util.Console;
 
 public class Day extends util.Day {
 

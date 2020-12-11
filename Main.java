@@ -1,7 +1,7 @@
 import java.lang.reflect.Constructor;
 import java.util.Calendar;
 
-import rccookie.util.Console;
+import com.github.rccookie.common.util.Console;
 import util.Day;
 import util.DayGenerator;
 import util.Day.NotImplementedException;

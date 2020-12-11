@@ -3,7 +3,7 @@ package day9;
 import java.util.ArrayList;
 import java.util.List;
 
-import rccookie.geometry.Geometry;
+import com.github.rccookie.common.geometry.Geometry;
 
 public class Day extends util.Day {
 

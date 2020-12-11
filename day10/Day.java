@@ -3,7 +3,7 @@ package day10;
 import java.util.ArrayList;
 import java.util.List;
 
-import rccookie.util.Console;
+import com.github.rccookie.common.util.Console;
 
 public class Day extends util.Day {
 
