@@ -112,8 +112,8 @@ public class Day extends util.Day {
                 StringBuilder line = new StringBuilder(width);
                 for(int x=0; x<width; x++) {
                     char old = oldSeating[y].charAt(x);
-                    if(old == FREE && occupiedCount(x, y, oldSeating) == 0) line.append(OCCUPIED);
-                    else if(old == OCCUPIED && occupiedCount(x, y, oldSeating) >= 4) line.append(FREE);
+                    if(old == FREE && directlyOccupiedCount(x, y, oldSeating) == 0) line.append(OCCUPIED);
+                    else if(old == OCCUPIED && directlyOccupiedCount(x, y, oldSeating) >= 4) line.append(FREE);
                     else line.append(old);
                 }
                 newSeating[y] = line.toString();
@@ -122,6 +122,16 @@ public class Day extends util.Day {
 
         int count = 0;
         for(String line : newSeating) for(char c : line.toCharArray()) if(c == OCCUPIED) count++;
+        return count;
+    }
+
+
+    private final int directlyOccupiedCount(int x, int y, String[] seats) {
+        int count = 0;
+        for(int i=-1; i<=1; i++) for(int j=-1; j<=1; j++) {
+            if(i == 0 && j == 0) continue;
+            if(occupied(x+i, y+j, seats)) count++;
+        }
         return count;
     }
 
@@ -238,19 +248,93 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart2() throws Exception {
-        
-        return -1;
+        String[] oldSeating, newSeating = input;
+
+        do {
+            oldSeating = newSeating;
+            newSeating = new String[height];
+
+            for(int y=0; y<height; y++) {
+                StringBuilder line = new StringBuilder(width);
+                for(int x=0; x<width; x++) {
+                    char old = oldSeating[y].charAt(x);
+                    if(old == FREE && visiblyOccupiedCount(x, y, oldSeating) == 0) line.append(OCCUPIED);
+                    else if(old == OCCUPIED && visiblyOccupiedCount(x, y, oldSeating) >= 5) line.append(FREE);
+                    else line.append(old);
+                }
+                newSeating[y] = line.toString();
+            }
+        } while (!Arrays.deepEquals(oldSeating, newSeating));
+
+        int count = 0;
+        for(String line : newSeating) for(char c : line.toCharArray()) if(c == OCCUPIED) count++;
+        return count;
     }
 
 
-    private final int occupiedCount(int x, int y, String[] seats) {
-        if(x < 0 || y < 0 || x >= width || y >= height) throw new IndexOutOfBoundsException("Location " + x + "|" + y + " is out of bounds for input.");
+    private final int visiblyOccupiedCount(int x, int y, String[] seats) {
         int count = 0;
-        for(int i=-1; i<=1; i++) for(int j=-1; j<=1; j++) {
-            try {
-                if((i != 0 || j != 0) && seats[y+j].charAt(x+i) == OCCUPIED) count++;
-            } catch(Exception e) { }
+        for(int i=1; i<width;  i++) {
+            char state = seatState(x+i, y, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<width;  i++) {
+            char state = seatState(x-i, y, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<height; i++) {
+            char state = seatState(x, y+i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<height; i++) {
+            char state = seatState(x, y-i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+
+        int max = Math.max(width, height);
+        for(int i=1; i<max; i++) {
+            char state = seatState(x+i, y+i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<max; i++) {
+            char state = seatState(x+i, y-i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<max; i++) {
+            char state = seatState(x-i, y+i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
+        }
+        for(int i=1; i<max; i++) {
+            char state = seatState(x-i, y-i, seats);
+            if(state == FLOOR) continue;
+            if(state == OCCUPIED) count++;
+            break;
         }
         return count;
+    }
+
+    private boolean occupied(int x, int y, String[] seats) {
+        return seatState(x, y, seats) == OCCUPIED;
+    }
+
+    private char seatState(int x, int y, String[] seats) {
+        try {
+            return seats[y].charAt(x);
+        } catch(Exception e) { }
+        return FREE;
     }
 }
