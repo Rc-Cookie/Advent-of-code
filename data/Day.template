@@ -4,20 +4,25 @@ import rccookie.util.Console;
 
 public class Day extends util.Day {
 
+    private final String[] input;
+
+    {
+        input = inputInLines();
+    }
+
     /**
      * %s
-     * <p><b>This method will return the result for the personal input.</b>
+     * <p>This method will return the result for the personal input.
      */
     @Override
     public long resultPart1() throws Exception {
-        String[] input = inputInLines();
         Console.map("Input", input);
         return -1;
     }
 
     /**
      * %s
-     * <p><b>This method will return the result for the personal input.</b>
+     * <p>This method will return the result for the personal input.
      */
     @Override
     public long resultPart2() throws Exception {
