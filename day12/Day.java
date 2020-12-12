@@ -1,5 +1,6 @@
 package day12;
 
+import com.github.rccookie.common.geometry.IntVector2D;
 import com.github.rccookie.common.geometry.Transform2D;
 import com.github.rccookie.common.geometry.Vector2D;
 
@@ -49,24 +50,24 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart1() throws Exception {
-        Transform2D transform = new Transform2D();
+        Transform2D target = new Transform2D();
         for(String line : input) {
             char action = line.charAt(0);
             int value = Integer.parseInt(line.substring(1));
             switch(action) {
-                case 'N': transform.location.add(N.scaled(value)); break;
-                case 'S': transform.location.add(S.scaled(value)); break;
-                case 'W': transform.location.add(W.scaled(value)); break;
-                case 'E': transform.location.add(E.scaled(value)); break;
-                case 'L': transform.rotation += value; break;
-                case 'R': transform.rotation -= value; break;
-                case 'F': transform.location.add(Vector2D.angledVector(transform.rotation, value)); break;
+                case 'N': target.location.add(N.scaled(value)); break;
+                case 'S': target.location.add(S.scaled(value)); break;
+                case 'W': target.location.add(W.scaled(value)); break;
+                case 'E': target.location.add(E.scaled(value)); break;
+                case 'L': target.rotation += value; break;
+                case 'R': target.rotation -= value; break;
+                case 'F': target.location.add(Vector2D.angledVector(target.rotation, value)); break;
             }
-            transform.rotation %= 360;
-            if(transform.rotation < 0) transform.rotation += 360;
+            target.rotation %= 360;
+            if(target.rotation < 0) target.rotation += 360;
         }
-        transform.location.round(); // To make sure that rounding works properly
-        return (long)(Math.abs(transform.location.x()) + Math.abs(transform.location.y()));
+        target.location.round(); // To make sure that rounding works properly
+        return (long)(Math.abs(target.location.x()) + Math.abs(target.location.y()));
     }
 
     /**
@@ -97,23 +98,21 @@ public class Day extends util.Day {
      */
     @Override
     public long resultPart2() throws Exception {
-        Transform2D transform = new Transform2D();
+        Vector2D waypoint = new IntVector2D(E.scaled(10).add(N));
+        Vector2D ship = new IntVector2D();
         for(String line : input) {
             char action = line.charAt(0);
             int value = Integer.parseInt(line.substring(1));
             switch(action) {
-                case 'N': transform.location.add(N.scaled(value)); break;
-                case 'S': transform.location.add(S.scaled(value)); break;
-                case 'W': transform.location.add(W.scaled(value)); break;
-                case 'E': transform.location.add(E.scaled(value)); break;
-                case 'L': transform.rotation += value; break;
-                case 'R': transform.rotation -= value; break;
-                case 'F': transform.location.add(Vector2D.angledVector(transform.rotation, value)); break;
+                case 'N': waypoint.add(N.scaled(value)); break;
+                case 'S': waypoint.add(S.scaled(value)); break;
+                case 'W': waypoint.add(W.scaled(value)); break;
+                case 'E': waypoint.add(E.scaled(value)); break;
+                case 'L': waypoint.rotate(value); break;
+                case 'R': waypoint.rotate(-value); break;
+                case 'F': ship.add(waypoint.scaled(value)); break;
             }
-            transform.rotation %= 360;
-            if(transform.rotation < 0) transform.rotation += 360;
         }
-        transform.location.round(); // To make sure that rounding works properly
-        return (long)(Math.abs(transform.location.x()) + Math.abs(transform.location.y()));
+        return (long)(Math.abs(ship.x()) + Math.abs(ship.y()));
     }
 }
