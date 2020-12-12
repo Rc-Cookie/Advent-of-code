@@ -2,11 +2,10 @@ package day12;
 
 import com.github.rccookie.common.geometry.Transform2D;
 import com.github.rccookie.common.geometry.Vector2D;
-import com.github.rccookie.common.util.Console;
 
 public class Day extends util.Day {
 
-    public static final Vector2D N = Vector2D.UNIT_VECTOR_Y, S = N.inverted(), W = Vector2D.UNIT_VECTOR_X, E = W.inverted();
+    public static final Vector2D N = Vector2D.UNIT_VECTOR_Y, S = N.inverted(), E = Vector2D.UNIT_VECTOR_X, W = E.inverted();
 
     private final String[] input;
 
@@ -66,19 +65,56 @@ public class Day extends util.Day {
             transform.rotation %= 360;
             if(transform.rotation < 0) transform.rotation += 360;
         }
-        Console.log(transform);
-        transform.location.round();
-        Console.log(transform);
+        transform.location.round(); // To make sure that rounding works properly
         return (long)(Math.abs(transform.location.x()) + Math.abs(transform.location.y()));
     }
 
     /**
-     * This description will be generated once the first task is completed. Please don't change anything!
+     * <h2 id="part2">--- Part Two ---</h2><p>Before you can give the destination to the captain, you realize that the actual action meanings were printed on the back of the instructions the whole time.</p>
+     * <p>Almost all of the actions indicate how to move a <em>waypoint</em> which is relative to the ship's position:</p>
+     * <ul>
+     * <li>Action <em><code>N</code></em> means to move the waypoint <em>north</em> by the given value.</li>
+     * <li>Action <em><code>S</code></em> means to move the waypoint <em>south</em> by the given value.</li>
+     * <li>Action <em><code>E</code></em> means to move the waypoint <em>east</em> by the given value.</li>
+     * <li>Action <em><code>W</code></em> means to move the waypoint <em>west</em> by the given value.</li>
+     * <li>Action <em><code>L</code></em> means to rotate the waypoint around the ship <em>left</em> (<em>counter-clockwise</em>) the given number of degrees.</li>
+     * <li>Action <em><code>R</code></em> means to rotate the waypoint around the ship <em>right</em> (<em>clockwise</em>) the given number of degrees.</li>
+     * <li>Action <em><code>F</code></em> means to move <em>forward</em> to the waypoint a number of times equal to the given value.</li>
+     * </ul>
+     * <p>The waypoint starts <em>10 units east and 1 unit north</em> relative to the ship. The waypoint is relative to the ship; that is, if the ship moves, the waypoint moves with it.</p>
+     * <p>For example, using the same instructions as above:</p>
+     * <ul>
+     * <li><code>F10</code> moves the ship to the waypoint 10 times (a total of <em>100 units east and 10 units north</em>), leaving the ship at <em>east 100, north 10</em>. The waypoint stays 10 units east and 1 unit north of the ship.</li>
+     * <li><code>N3</code> moves the waypoint 3 units north to <em>10 units east and 4 units north of the ship</em>. The ship remains at <em>east 100, north 10</em>.</li>
+     * <li><code>F7</code> moves the ship to the waypoint 7 times (a total of <em>70 units east and 28 units north</em>), leaving the ship at <em>east 170, north 38</em>. The waypoint stays 10 units east and 4 units north of the ship.</li>
+     * <li><code>R90</code> rotates the waypoint around the ship clockwise 90 degrees, moving it to <em>4 units east and 10 units south of the ship</em>. The ship remains at <em>east 170, north 38</em>.</li>
+     * <li><code>F11</code> moves the ship to the waypoint 11 times (a total of <em>44 units east and 110 units south</em>), leaving the ship at <em>east 214, south 72</em>. The waypoint stays 4 units east and 10 units south of the ship.</li>
+     * </ul>
+     * <p>After these operations, the ship's Manhattan distance from its starting position is <code>214 + 72</code> = <em><code>286</code></em>.</p>
+     * <p>Figure out where the navigation instructions actually lead. <em>What is the Manhattan distance between that location and the ship's starting position?</em></p>
+     * 
      * <p>This method will return the result for the personal input.
      */
     @Override
     public long resultPart2() throws Exception {
-        super.resultPart2(); //Don't edit this until task 1 is done or the code will try to download the second description every time
+        Transform2D transform = new Transform2D();
+        for(String line : input) {
+            char action = line.charAt(0);
+            int value = Integer.parseInt(line.substring(1));
+            switch(action) {
+                case 'N': transform.location.add(N.scaled(value)); break;
+                case 'S': transform.location.add(S.scaled(value)); break;
+                case 'W': transform.location.add(W.scaled(value)); break;
+                case 'E': transform.location.add(E.scaled(value)); break;
+                case 'L': transform.rotation += value; break;
+                case 'R': transform.rotation -= value; break;
+                case 'F': transform.location.add(Vector2D.angledVector(transform.rotation, value)); break;
+            }
+            transform.rotation %= 360;
+            if(transform.rotation < 0) transform.rotation += 360;
+        }
+        transform.location.round(); // To make sure that rounding works properly
+        return (long)(Math.abs(transform.location.x()) + Math.abs(transform.location.y()));
         return -1;
     }
 }
