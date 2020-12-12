@@ -115,6 +115,5 @@ public class Day extends util.Day {
         }
         transform.location.round(); // To make sure that rounding works properly
         return (long)(Math.abs(transform.location.x()) + Math.abs(transform.location.y()));
-        return -1;
     }
 }
