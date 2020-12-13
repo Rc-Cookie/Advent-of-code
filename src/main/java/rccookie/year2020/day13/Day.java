@@ -1,6 +1,7 @@
 package rccookie.year2020.day13;
 
-import com.github.rccookie.common.util.Console;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Day extends com.github.rccookie.adventofcode.util.Day {
 
@@ -52,17 +53,86 @@ public class Day extends com.github.rccookie.adventofcode.util.Day {
      */
     @Override
     public long resultPart1() throws Exception {
-        Console.map("Input", input);
-        return -1;
+        return Arrays.stream(input[1].split(",")).filter(id -> !"x".equals(id)).mapToInt(id -> Integer.parseInt(id)).mapToObj(id -> new int[] {id, id - (Integer.parseInt(input[0]) % id)}).min((a, b) -> a[1] - b[1]).map(id -> id[0] * id[1]).get();
     }
 
     /**
-     * This description will be generated once the first task is completed. Please don't change anything!
+     * <h2 id="part2">--- Part Two ---</h2><p>The shuttle company is running a <span title="This is why you should never let me design a contest for a shuttle company.">contest</span>: one gold coin for anyone that can find the earliest timestamp such that the first bus ID departs at that time and each subsequent listed bus ID departs at that subsequent minute. (The first line in your input is no longer relevant.)</p>
+     * <p>For example, suppose you have the same list of bus IDs as above:</p>
+     * <pre><code>7,13,x,x,59,x,31,19</code></pre>
+     * <p>An <code>x</code> in the schedule means there are no constraints on what bus IDs must depart at that time.</p>
+     * <p>This means you are looking for the earliest timestamp (called <code>t</code>) such that:</p>
+     * <ul>
+     * <li>Bus ID <code>7</code> departs at timestamp <code>t</code>.
+     * </li><li>Bus ID <code>13</code> departs one minute after timestamp <code>t</code>.</li>
+     * <li>There are no requirements or restrictions on departures at two or three minutes after timestamp <code>t</code>.</li>
+     * <li>Bus ID <code>59</code> departs four minutes after timestamp <code>t</code>.</li>
+     * <li>There are no requirements or restrictions on departures at five minutes after timestamp <code>t</code>.</li>
+     * <li>Bus ID <code>31</code> departs six minutes after timestamp <code>t</code>.</li>
+     * <li>Bus ID <code>19</code> departs seven minutes after timestamp <code>t</code>.</li>
+     * </ul>
+     * <p>The only bus departures that matter are the listed bus IDs at their specific offsets from <code>t</code>. Those bus IDs can depart at other times, and other bus IDs can depart at those times.  For example, in the list above, because bus ID <code>19</code> must depart seven minutes after the timestamp at which bus ID <code>7</code> departs, bus ID <code>7</code> will always <em>also</em> be departing with bus ID <code>19</code> at seven minutes after timestamp <code>t</code>.</p>
+     * <p>In this example, the earliest timestamp at which this occurs is <em><code>1068781</code></em>:</p>
+     * <pre><code>time     bus 7   bus 13  bus 59  bus 31  bus 19
+     * 1068773    .       .       .       .       .
+     * 1068774    D       .       .       .       .
+     * 1068775    .       .       .       .       .
+     * 1068776    .       .       .       .       .
+     * 1068777    .       .       .       .       .
+     * 1068778    .       .       .       .       .
+     * 1068779    .       .       .       .       .
+     * 1068780    .       .       .       .       .
+     * <em>1068781</em>    <em>D</em>       .       .       .       .
+     * <em>1068782</em>    .       <em>D</em>       .       .       .
+     * <em>1068783</em>    .       .       .       .       .
+     * <em>1068784</em>    .       .       .       .       .
+     * <em>1068785</em>    .       .       <em>D</em>       .       .
+     * <em>1068786</em>    .       .       .       .       .
+     * <em>1068787</em>    .       .       .       <em>D</em>       .
+     * <em>1068788</em>    D       .       .       .       <em>D</em>
+     * 1068789    .       .       .       .       .
+     * 1068790    .       .       .       .       .
+     * 1068791    .       .       .       .       .
+     * 1068792    .       .       .       .       .
+     * 1068793    .       .       .       .       .
+     * 1068794    .       .       .       .       .
+     * 1068795    D       D       .       .       .
+     * 1068796    .       .       .       .       .
+     * 1068797    .       .       .       .       .
+     * </code></pre>
+     * <p>In the above example, bus ID <code>7</code> departs at timestamp <code>1068788</code> (seven minutes after <code>t</code>). This is fine; the only requirement on that minute is that bus ID <code>19</code> departs then, and it does.</p>
+     * <p>Here are some other examples:</p>
+     * <ul>
+     * <li>The earliest timestamp that matches the list <code>17,x,13,19</code> is <em><code>3417</code></em>.</li>
+     * <li><code>67,7,59,61</code> first occurs at timestamp <em><code>754018</code></em>.</li>
+     * <li><code>67,x,7,59,61</code> first occurs at timestamp <em><code>779210</code></em>.</li>
+     * <li><code>67,7,x,59,61</code> first occurs at timestamp <em><code>1261476</code></em>.</li>
+     * <li><code>1789,37,47,1889</code> first occurs at timestamp <em><code>1202161486</code></em>.</li>
+     * </ul>
+     * <p>However, with so many bus IDs in your list, surely the actual earliest timestamp will be larger than <code>100000000000000</code>!</p>
+     * <p><em>What is the earliest timestamp such that all of the listed bus IDs depart at offsets matching their positions in the list?</em></p>
+     * 
      * <p>This method will return the result for the personal input.
      */
     @Override
     public long resultPart2() throws Exception {
-        super.resultPart2(); //Don't edit this until task 1 is done or the code will try to download the second description every time
-        return -1;
+        index = 0;
+        int[][] ids = Arrays.stream(input[1].split(",")).map(id -> new Object[] {id, index++}).filter(id -> !((String)(id[0])).startsWith("x")).map(obj -> new int[] {Integer.parseInt((String)obj[0]), (int)obj[1]}).collect(Collectors.toList()).toArray(new int[0][]);
+        multiplier = ids[0][0];
+        time = 0;
+        Arrays.stream(ids).filter(id -> id[1] != 0).forEach(id -> {
+            while(true) {
+                if((time + id[1]) % id[0] == 0) {
+                    multiplier *= id[0];
+                    break;
+                }
+                time += multiplier;
+            }
+        });
+        return time;
     }
+
+    // Have to be global to work with lambda in streams
+    private int index;
+    private long multiplier, time;
 }
