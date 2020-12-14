@@ -53,7 +53,13 @@ public class Day extends com.github.rccookie.adventofcode.util.Day {
      */
     @Override
     public long resultPart1() throws Exception {
-        return Arrays.stream(input[1].split(",")).filter(id -> !"x".equals(id)).mapToInt(id -> Integer.parseInt(id)).mapToObj(id -> new int[] {id, id - (Integer.parseInt(input[0]) % id)}).min((a, b) -> a[1] - b[1]).map(id -> id[0] * id[1]).get();
+        return Arrays.stream(input[1].split(","))
+            .filter(id -> !"x".equals(id))
+            .mapToInt(id -> Integer.parseInt(id))
+            .mapToObj(id -> new int[] {id, id - (Integer.parseInt(input[0]) % id)})
+            .min((a, b) -> a[1] - b[1])
+            .map(id -> id[0] * id[1])
+            .get();
     }
 
     /**
