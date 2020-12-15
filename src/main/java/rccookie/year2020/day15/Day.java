@@ -3,6 +3,8 @@ package rccookie.year2020.day15;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.github.rccookie.common.util.Console;
+
 public class Day extends com.github.rccookie.adventofcode.util.Day {
 
     private final String[] input;
@@ -83,9 +85,9 @@ public class Day extends com.github.rccookie.adventofcode.util.Day {
                 else usedNumbers[i] = i - lastIndecies.get(usedNumbers[i-1]);
             }
             if(i > 0) lastIndecies.put(usedNumbers[i-1], i);
-            if(i % 2000000 == 10000) System.out.print('.');
+            Console.setProgress(i / (double)usedNumbers.length);
         }
-        if(usedNumbers.length >= 10000) System.out.println();
         return usedNumbers[usedNumbers.length - 1];
     }
 }
+
