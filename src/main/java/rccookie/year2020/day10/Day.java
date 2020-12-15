@@ -160,9 +160,9 @@ public class Day extends com.github.rccookie.adventofcode.util.Day {
             } catch(IndexOutOfBoundsException e) { }
 
             combinationsUpwards.set(i, count);
-        }
 
-        Console.map("Possible combinations upwards", combinationsUpwards);
+            Console.setProgress(((numbers.size() - 2) - i) / (double)(numbers.size() - 2));
+        }
 
         return combinationsUpwards.get(0);
     }
