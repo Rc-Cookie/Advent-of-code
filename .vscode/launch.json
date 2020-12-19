@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Day",
+            "request": "launch",
+            "mainClass": "rccookie.year2020.day18.Day",
+            "projectName": "advent-of-code"
+        },
+        {
+            "type": "java",
+            "name": "Launch Day",
+            "request": "launch",
+            "mainClass": "rccookie.year2020.day17.Day",
+            "projectName": "advent-of-code"
+        },
+        {
+            "type": "java",
             "name": "Launch current day",
             "request": "launch",
             "mainClass": "Main"
@@ -15,7 +29,6 @@
             "name": "Debug (Launch) - Current File",
             "request": "launch",
             "mainClass": "${file}"
-        },
-
+        }
     ]
 }
